@@ -12,8 +12,8 @@ loguru = "^0.6.0"
 svglib = "^1.5.1"
 
 [tool.poetry.group.dev.dependencies]
-black = "^23.1.0"
-pytest = "^7.2.2"
+black = ">=26.3.1,<27"
+pytest = ">=9.0.3,<10"
 bandit = "^1.7.4"
 mypy = "^1.0.1"
 isort = "^5.12.0"
