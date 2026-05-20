@@ -1,17 +1,15 @@
 import pytest
-from svglib.svglib import svg2rlg
 from pathlib import Path
-from mockito import when
 
 from archi_toolbox.architecture.operations.tiling import load_plan
-from tests.unit.conftest import RESOURCE_ROOT
+from ...conftest import RESOURCE_ROOT
 
 
 @pytest.fixture
-def rectangle() -> "Drawing":
+def rectangle() -> Path:
     return RESOURCE_ROOT / "simple_rectangle.svg"
 
 
-def test_load_plan_loads_polygon_from_svg(rectangle: "Drawing") -> None:
+def test_load_plan_loads_drawing_from_svg(rectangle: Path) -> None:
     plan = load_plan(rectangle)
-    assert plan.getContents() == "l"
+    assert len(plan.getContents()) == 1
