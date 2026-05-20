@@ -44,6 +44,7 @@ fixable = ["ALL"]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/**/*.py" = [
+    "INP001",  # Tests are intentionally not explicit packages.
     "PLR2004", # Literal values are often the point of a test.
     "S101"     # Assertions are expected in tests.
 ]
