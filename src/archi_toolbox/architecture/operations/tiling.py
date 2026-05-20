@@ -1,9 +1,10 @@
 from asyncio.log import logger
 from pathlib import Path
-from archi_toolbox.architecture.exceptions import InputError
 
 from reportlab.graphics.shapes import Drawing, Group
 from svglib.svglib import svg2rlg
+
+from archi_toolbox.architecture.exceptions import InputError
 
 
 def load_plan(file: Path) -> Drawing:

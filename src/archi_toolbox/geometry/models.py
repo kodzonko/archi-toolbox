@@ -1,12 +1,11 @@
 from dataclasses import dataclass
-from typing import Optional
 
 
 @dataclass
 class Point:
     x: int
     y: int
-    z: Optional[int] = None
+    z: int | None = None
 
 
 @dataclass

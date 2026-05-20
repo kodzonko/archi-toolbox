@@ -1,7 +1,9 @@
-import pytest
 from pathlib import Path
 
+import pytest
+
 from archi_toolbox.architecture.operations.tiling import load_plan
+
 from ...conftest import RESOURCE_ROOT
 
 
