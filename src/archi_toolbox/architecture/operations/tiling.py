@@ -12,7 +12,6 @@ def load_plan(file: Path) -> Polygon:
     try:
         drawing: Drawing = svg2rlg(file)
         contents: Group = drawing.getContents()[0]
-        contents.
         return drawing
     except OSError:
         logger.error("Failed to open file in load_plan from file: %s." % file)
