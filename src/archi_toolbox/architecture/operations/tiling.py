@@ -1,19 +1,26 @@
-from asyncio.log import logger
-from pathlib import Path
-from archi_toolbox.architecture.exceptions import InputError
+"""Operations for loading and processing tile plans."""
 
-from archi_toolbox.geometry.models import Polygon
-from reportlab.graphics.shapes import Drawing, Group
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from svglib.svglib import svg2rlg
 
+from archi_toolbox.architecture.exceptions import InputError
+from archi_toolbox.logger import logger
 
-def load_plan(file: Path) -> Polygon:
+if TYPE_CHECKING:
+    from pathlib import Path
+
+    from reportlab.graphics.shapes import Drawing
+
+
+def load_plan(file: Path) -> Drawing:
     """Load a plan outline from a file."""
     try:
         drawing: Drawing = svg2rlg(file)
-        contents: Group = drawing.getContents()[0]
-        contents.
+    except OSError as exc:
+        logger.error("Failed to open file in load_plan from file: {}.", file)
+        raise InputError.plan_load_failed(file) from exc
+    else:
         return drawing
-    except OSError:
-        logger.error("Failed to open file in load_plan from file: %s." % file)
-        raise InputError(f"Could not load the plan from file: {file}.")
