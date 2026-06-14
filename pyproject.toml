@@ -1,28 +1,81 @@
-[tool.poetry]
+[project]
 name = "archi-toolbox"
 version = "0.1.0"
 description = "Set of tools useful for architects and interior designers"
-authors = ["Jan Wadolowski <janwadolowski@gmail.com>"]
-readme = "README.md"
-packages = [{include = "archi_toolbox", from = "src"}]
+requires-python = "~=3.14.0"
+dependencies = ["loguru==0.7.3", "svglib==1.6.0"]
 
-[tool.poetry.dependencies]
-python = "^3.10"
-loguru = "^0.6.0"
-svglib = "^1.5.1"
-
-[tool.poetry.group.dev.dependencies]
-black = "^23.1.0"
-pytest = "^7.2.2"
-bandit = "^1.7.4"
-mypy = "^1.0.1"
-isort = "^5.12.0"
-pydocstyle = "^6.3.0"
-mockito = "^1.4.0"
+[dependency-groups]
+dev = [
+    "mockito>=2.0.4",
+    "pytest>=9.0.3",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.15.13",
+    "ty>=0.0.38"
+]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["uv_build~=0.9.28"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-root = "src"
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 120
+indent-width = 4
+target-version = "py314"
+src = ["src", "tests"]
+include = ["pyproject.toml", "src/**/*.py", "tests/**/*.py"]
+force-exclude = true
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "COM812", # Avoid conflicts with the Ruff formatter.
+    "D203",   # Prefer no blank line before class docstrings.
+    "D213",   # Prefer summary on the first docstring line.
+    "ISC001"  # Avoid conflicts with the Ruff formatter.
+]
+fixable = ["ALL"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = [
+    "INP001",  # Tests are intentionally not explicit packages.
+    "PLR2004", # Literal values are often the point of a test.
+    "S101"     # Assertions are expected in tests.
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["archi_toolbox"]
+combine-as-imports = true
+split-on-trailing-comma = false
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"
+skip-magic-trailing-comma = false
+docstring-code-format = true
+docstring-code-line-length = "dynamic"
+
+[tool.ty.environment]
+root = ["src", "tests"]
+python-version = "3.14"
+
+[tool.ty.analysis]
+replace-imports-with-any = ["loguru", "mockito", "pytest", "reportlab.**", "svglib.**"]
+
+[tool.ty.src]
+include = ["src", "tests"]
+respect-ignore-files = true
+
+[tool.ty.terminal]
+error-on-warning = true
+output-format = "concise"

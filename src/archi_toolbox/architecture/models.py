@@ -1,6 +1,12 @@
-from dataclasses import dataclass
+"""Architecture domain models."""
 
-from archi_toolbox.geometry.models import Polygon
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from archi_toolbox.geometry.models import Polygon
 
 
 @dataclass
