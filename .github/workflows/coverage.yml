@@ -1,0 +1,30 @@
+name: Coverage
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Install Cairo build dependencies
+        run: sudo apt-get update && sudo apt-get install -y libcairo2-dev pkg-config
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          version: "0.13.6"
+      - name: Run tests and generate coverage
+        run: uv run --locked pytest --cov=archi_toolbox --cov-branch --cov-report=term-missing --cov-report=xml:coverage.xml
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        with:
+          files: coverage.xml
+          disable_search: true
+          fail_ci_if_error: true
+          use_oidc: true
