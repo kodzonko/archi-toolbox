@@ -3,7 +3,7 @@ name = "archi-toolbox"
 version = "0.1.0"
 description = "Set of tools useful for architects and interior designers"
 requires-python = "~=3.14.0"
-dependencies = ["loguru==0.7.3", "svglib==1.6.0"]
+dependencies = ["loguru==0.7.3", "svglib==2.3.1"]
 
 [dependency-groups]
 dev = [
